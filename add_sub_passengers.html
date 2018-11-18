@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Remaining Passengers</title>
+  <style>
+    div {
+      padding: 10px;
+      margin: 10px;
+      background-color: #BBFFFF;
+      box-shadow: 5px 5px 5px #D8D8D8;
+    }
+  </style>
+</head>
+<body>
+  <h3>Remaining Passengers after Last Bus Stop</h3>
+  <div>
+    <p>{{ remaining }}</p>
+  </div>
+  <h3>add_sub_passengers.py</h3>
+  <div>
+    <pre>
+      <code>
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+@app.route('/')
+def add_sub_psngr():
+    lst = [[10,0],[3,5],[5,8]]
+    remaining = sum([e[0] - e[1] for e in lst])
+    return render_template("add_sub_passengers.html", remaining=remaining)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+      </code>
+    </pre>
+  </div>
+  <h3>list: passenger on, passenger off</h3>
+  <p>At the second stop, 3 passengers enter bus while 5 passengers exit.</p>
+  <div><pre><code>[[10,0],[3,5],[5,8]]</code></pre></div>
+  <h3>sum of list comprehension</h3>
+  <p>Subtract passengers leaving bus <b>e[1]</b> from passengers entering bus <b>e[0]</b>. Iterate through three stops in list.</p>
+  <div><pre><code>sum([e[0] - e[1] for e in lst])</code></pre></div>
+  <h3>add_sub_passengers.html</h3>
+  <p>
+    <em>Mustache</em> (or <em>handlebar</em>) syntax is used to pass variables
+    from the application to the template, e.g.
+    &#123;&#123; remaining &#125;&#125;.
+  </p>
+  <div>
+    <pre>
+      <code>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;title&gt;Remaining Passengers after Last Stop&lt;/title&gt;
+  &lt;style&gt;
+    div {
+      padding: 10px;
+      margin: 10px;
+      background-color: #BBFFFF;
+      box-shadow: 5px 5px 5px #D8D8D8;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h3&gt;Remaining Passengers after Last Stop&lt;/h3&gt;
+  &lt;div&gt;
+    &lt;p&gt;&#123;&#123; remaining &#125;&#125;&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+      </code>
+    </pre>
+  </div>
+  <h3>add_sub_passengers.sh</h3>
+  <p>In a Unix-like terminal emulator:</p>
+  <div><pre><code>$ sudo ./add_sub_passengers.sh</code></pre></div>
+  <p>Setting development mode through a shell script avoids unexpected behavior.
+  A Flask application variable may also be included.</p>
+  <div>
+    <pre>
+      <code>
+#!/bin/bash
+# $ sudo ./add_sub_passengers.sh
+
+export FLASK_APP=add_sub_passengers.py
+export FLASK_ENV=development
+flask run
+      </code>
+    </pre>
+  </div>
+</body>
+</html>
