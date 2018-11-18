@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Filtered List</title>
+  <style>
+    div {
+      padding: 10px;
+      margin: 10px;
+      background-color: #BBFFFF;
+      box-shadow: 5px 5px 5px #D8D8D8;
+    }
+  </style>
+</head>
+<body>
+  <h3>Return Filtered List</h3>
+  <div>
+    <p>{{ filtered }}</p>
+  </div>
+  <h3>filter_list.py</h3>
+  <div>
+    <pre>
+      <code>
+import json
+import requests
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+@app.route('/')
+def filter_list():
+    l = [1, 2, 'a', 'b']
+    f = list(filter(lambda x: type(x) == int, l))
+    return render_template("filter_list.html", filtered=f)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+      </code>
+    </pre>
+  </div>
+  <h3>filter_list.html</h3>
+  <div>
+    <pre>
+      <code>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;title&gt;Filter List&lt;/title&gt;
+  &lt;style&gt;
+    div {
+      padding: 10px;
+      margin: 10px;
+      background-color: #BBFFFF;
+      box-shadow: 5px 5px 5px #D8D8D8;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h3&gt;Filter List&lt;/h3&gt;
+  &lt;div&gt;
+    &lt;p&gt;{{ filtered }}&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+      </code>
+    </pre>
+  </div>
+  <h3>filter_list.sh</h3>
+  <div>
+    <pre>
+      <code>
+#!/bin/bash
+# sudo ./filter_list.sh
+
+export FLASK_APP=filter_list.py
+export FLASK_ENV=development
+flask run
+      </code>
+    </pre>
+  </div>
+</body>
+</html>
