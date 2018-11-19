@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Highest Adjacent Element Product</title>
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles/style.css') }}">
+</head>
+<body>
+  <h3>Highest Adjacent Element Product</h3>
+  <div>
+    <p>{{ highest }}</p>
+  </div>
+  <h3>highest_adj_el_product.py</h3>
+  <p>An array of positive and negative numbers is given:</p>
+  <div>
+    <pre><code>arr = [3, 6, -2, -5, 7, 3]</code></pre>
+  </div>
+  <p>The product of each pair of adjacent numbers is calculated:</p>
+  <div>
+    <pre><code>product = arr[i] * arr[i+1]</code></pre>
+  </div>
+  <ul>
+    <li>3 x 6
+    <li>6 x -2
+    <li>-2 x -5
+    <li>-5 x 7
+    <li>7 x 3 (highest product is 21)
+  </ul>
+  <div>
+    <pre>
+      <code>
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+@app.route('/')
+def high_adj_num_prod():
+    arr = [3, 6, -2, -5, 7, 3]
+    product = arr[0] * arr[1]
+    for i in range(len(arr)-1):
+        if (arr[i] * arr[i+1]) > product:
+            product = arr[i] * arr[i+1]
+    return render_template("highest_adj_el_product.html", highest=product)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+      </code>
+    </pre>
+  </div>
+  <h3>highest_adj_el_product.html</h3>
+  <p>
+    <em>Mustache</em> (or <em>handlebar</em>) syntax is used to pass variables
+    from the application to the template, e.g.
+    <strong>&#123;&#123; highest &#125;&#125;</strong>. Also take note that the
+    HTML template file is stored in the <strong>/templates</strong> directory
+    within the application directory.
+  </p>
+  <div>
+    <pre>
+      <code>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;title&gt;Highest Adjacent Element Product&lt;/title&gt;
+  &lt;link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles/style.css') }}"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h3&gt;Highest Adjacent Element Product&lt;/h3&gt;
+  &lt;div&gt;
+    &lt;p&gt;&#123;&#123; highest &#125;&#125;&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+      </code>
+    </pre>
+  </div>
+  <h3>highest_adj_el_product.sh</h3>
+  <p>To run the Flask application, run the shell script in a Unix-like terminal emulator:</p>
+  <div><pre><code>$ sudo ./highest_adj_el_product.sh</code></pre></div>
+  <p>Setting development mode through a shell script avoids unexpected behavior.
+  The Flask application is also included.</p>
+  <div>
+    <pre>
+      <code>
+#!/bin/bash
+# $ sudo ./highest_adj_el_product.sh
+
+export FLASK_APP=highest_adj_el_product.py
+export FLASK_ENV=development
+flask run
+      </code>
+    </pre>
+  </div>
+</body>
+</html>
