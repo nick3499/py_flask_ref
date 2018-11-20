@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>
+    Longest String Element
+  </title>
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles/style.css') }}">
+</head>
+<body>
+  <h1>
+    Longest String Element
+  </h1>
+  <div class="mono">
+{{ longest }}
+  </div>
+  <h2 class="mono2">
+    longest_str.py
+  </h2>
+  <h2>
+    decorator
+  </h2>
+  <p>
+    <strong>@app.route('/')</strong> is a decorator which modifies <strong>longest_str()</strong> without changing that function's syntax. Whenever a user sends a request to the root route of the application, then <strong>longest_str()</strong> is executed.
+  </p>
+  <div class="mono">
+@app.route('/')
+  </div>
+  <div class="mono">
+$ curl http://localhost:5000
+  </div>
+  <h2>
+    list
+  </h2>
+  <p>
+    Below, a list of strings is stored in a variable using the Python REPL. Lists are declared with square brackets: <strong>[]</strong>.
+  </p>
+  <div class="mono">
+>>> days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+>>> type(days)
+&lt;class 'list'&gt;
+  </div>
+  <h2>
+    max string length variable
+  </h2>
+  <p>
+    Variable <strong>n</strong> is initialized because it will be referenced in the <strong>for</strong> loop and will be used to store the maximum string length.
+  </p>
+  <p>
+    The variable must be initialized before the <strong>for</strong> loop executes. If a local variable is referenced before assignment, the program should return an <strong>UnboundLocalError</strong>.
+  </p>
+  <div class="mono">
+n = 0
+  </div>
+  <h2>
+    for loop
+  </h2>
+  <p>
+    The parameter <strong>len(days)</strong> ensures that the correct list length is passed to the <strong>range()</strong> function in order to avoid an <strong>IndexError</strong>.
+  </p>
+  <div class="mono">
+>>> days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+>>> range(len(days))
+range(0, 7)
+  </div>
+  <p>
+    <strong>for</strong> loop iterates through list of <strong>days</strong>. If string length is greater than <strong>n</strong>, then the existing value of <strong>n</strong> is replaced with the length of that string. The first iteration replaces <strong>n = 0</strong> with <strong>n = 6</strong> since <strong>Monday</strong> has <em>6</em> characters.
+  </p>
+  <div class="mono">
+for i in range(len(days)):
+    if len(days[i]) > n:
+        n = len(days[i])
+  </div>
+  <h2>
+    if statement
+  </h2>
+  <p>
+    During the first iteration, the <strong>if</strong> statement compares the length of <strong>"Monday"</strong> with the current value of <strong>n</strong>, which is <strong>0</strong>. Since the string <strong>"Monday"</strong> contains 6 characters, the instruction <strong>n = len(days[i])</strong> changes <strong>n = 0</strong> to <strong>n = 6</strong>.
+  </p>
+  <div class="mono">
+>>>> days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+>>> n = 0
+>>> n = len(days[0])
+>>> n
+6
+  </div>
+  <div class="mono">
+if len(days[i]) > n:
+    n = len(days[i])
+  </div>
+  <h2>
+    render template
+  </h2>
+  <p>
+    Render template. After the final iteration, the value of <strong>n</strong> will be the longest string length: <strong>n = 9</strong>. That value is then passed to the template by the <strong>render_template()</strong> function.
+  </p>
+  <div class="mono">
+return render_template("longest_str.html", longest=n)
+  </div>
+  <h2>
+    if statement
+  </h2>
+  <div class="mono">
+if __name__ == '__main__':
+    app.run(debug=True)
+  </div>
+  <p>
+    Since this Flask application runs as a stand-alone program, the <strong>if</strong> statement evaluates to <strong>True</strong>, and <strong>app.run()</strong> executes the Flask application.
+  </p>
+  <p>
+    If this application is imported as a module, <strong>__name__</strong> will change to <strong>longest_str</strong> and the <strong>if</strong> statement will evaluate to <strong>False</strong>.
+  </p>
+  <div class="mono">
+>>> __name__
+'__main__'
+  </div>
+  <h2>
+    Flask application
+  </h2>
+  <div class="mono">
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+@app.route('/')
+def longest_str():
+    days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    n = 0
+    for i in range(len(days)):
+        if len(days[i]) > n:
+            n = len(days[i])
+    return render_template("longest_str.html", longest=n)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+  </div>
+  <h2 class="mono2">
+    longest_str.html
+  </h2>
+  <p>
+    <em>Mustache</em> (or <em>handlebar</em>) syntax is used to pass variables from the application to the template, e.g. <strong>&#123;&#123; longest &#125;&#125;</strong>. Also take note that the
+  </p>
+  <p>
+    HTML template file is stored in the <strong>/templates</strong> directory within the application directory.
+  </p>
+  <div class="mono">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;title&gt;Longest String Element&lt;/title&gt;
+  &lt;link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles/style.css') }}"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h2&gt;Longest String Element&lt;/h2&gt;
+  &lt;div&gt;
+    &lt;p&gt;&#123;&#123; longest &#125;&#125;&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+  </div>
+  <h2 class="mono2">
+    longest_str.sh
+  </h2>
+  <p>
+    To run the Flask application, run the shell script in a Unix-like terminal emulator:
+  </p>
+  <div class="mono">
+$ sudo ./longest_str.sh
+  </div>
+  <p>
+    Setting development mode through a shell script avoids unexpected behavior. The Flask application is also included.
+  </p>
+  <div class="mono">
+#!/bin/bash
+# $ sudo ./longest_str.sh
+
+export FLASK_APP=longest_str.py
+export FLASK_ENV=development
+flask run
+  </div>
+</body>
+</html>
