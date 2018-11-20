@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>
+    Concatenate Lists
+  </title>
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles/style.css') }}">
+</head>
+<body>
+  <h1>
+    Concatenate Lists
+  </h1>
+  <div class="mono">
+{{ concatenated }}
+  </div>
+  <h2 class="mono2">
+    concat_lists.py
+  </h2>
+  <h2>
+    Decorator
+  </h2>
+  <p>
+    <strong>@app.route('/')</strong> is a decorator which modifies <strong>concat_lists()</strong> without changing that function's syntax. Whenever a user sends a request to the root route of the application, then <strong>concat_lists()</strong> is executed.
+  </p>
+  <div class="mono">
+@app.route('/')
+  </div>
+  <h2>
+    Lists
+  </h2>
+  <p>
+    2 lists of numbers are stored in separate variables using the Python REPL. Lists are declared with square brackets: <strong>[]</strong>.
+  </p>
+  <div class="mono">
+>>> l1 = [1, 2, 3, 4]
+>>> l2 = [5, 6, 7, 8]
+>>> type(l1)
+&lt;class 'list'&gt;
+  </div>
+  <h2>
+    Set, List, Sorted
+  </h2>
+  <ul>
+    <li>concatenate both lists into a single set
+    <li>convert set to list
+    <li>sort list
+  </ul>
+  <div class="mono">
+>>> l1 = [1, 2, 3, 4]
+>>> l2 = [5, 6, 7, 8]
+>>> type(l1)
+&lt;class 'list'&gt;
+>>> set(l1 + l2)
+{1, 2, 3, 4, 5, 6, 7, 8}
+>>> list(set(l1 + l2))
+[1, 2, 3, 4, 5, 6, 7, 8]
+>>> sorted(list(set(l1 + l2)))
+[1, 2, 3, 4, 5, 6, 7, 8]
+  </div>
+  <h2>
+    Render Template
+  </h2>
+  <p>
+    Render template. The first parameter passed to <strong>render_template()</strong> is the template file <strong>concat_lists.html</strong>. The second is <strong>concatenated=l3</strong>, which associates the sorted list of concatenated lists to the template.
+  </p>
+  <div class="mono">
+return render_template("concat_lists.html", concatenated=n)
+  </div>
+  <h2>
+    If Statement
+  </h2>
+  <div class="mono">
+if __name__ == '__main__':
+    app.run(debug=True)
+  </div>
+  <p>
+    Since this Flask application runs as a stand-alone program, the <strong>if</strong> statement evaluates to <strong>True</strong>, and <strong>app.run()</strong> executes the Flask application.
+  </p>
+  <p>
+    If this application is imported as a module, <strong>__name__</strong> will change to <strong>concat_lists</strong> and the <strong>if</strong> statement will evaluate to <strong>False</strong>.
+  </p>
+  <div class="mono">
+>>> __name__
+'__main__'
+  </div>
+  <h2>
+    Flask application
+  </h2>
+  <div class="mono">
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+@app.route('/')
+def concat_lists():
+    l1 = [1, 2, 3, 4]
+    l2 = [5, 6, 7, 8]
+    l3 = sorted(list(set(l1 + l2)))
+    return render_template("concat_arr.html", concatenated=l3)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+  </div>
+  <h2 class="mono2">
+    concat_lists.html
+  </h2>
+  <p>
+    <em>Mustache</em> (or <em>handlebar</em>) syntax is used to pass variables from the application to the template, e.g. <strong>&#123;&#123; concatenated &#125;&#125;</strong>.
+  </p>
+  <p>
+    Flask searches the <strong>/templates</strong> directory for the HTML template file, and the <strong>/static</strong> directory for the CSS stylesheet.
+  </p>
+  <div class="mono">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;title&gt;
+    Concatenate Lists
+  &lt;/title&gt;
+  &lt;link rel=stylesheet type=text/css href="&#123;&#123; url_for('static', filename='styles/style.css') &#125;&#125;"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;
+    Concatenate Lists
+  &lt;/h1&gt;
+  &lt;div class="mono"&gt;
+&#123;&#123; concatenated &#125;&#125;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+  </div>
+  <h2 class="mono2">
+    concat_lists.sh
+  </h2>
+  <p>
+    To run the Flask application, run the shell script in a Unix-like terminal emulator:
+  </p>
+  <div class="mono">
+$ sudo ./concat_lists.sh
+  </div>
+  <p>
+    Setting development mode through a shell script avoids unexpected behavior. The Flask application is also included.
+  </p>
+  <h2>FLASK_APP</h2>
+  <p>
+    The <strong>FLASK_APP</strong> environment variable stores the Flask application's filename. With that environment variable set, <strong>flask run</strong> starts the application.
+  </p>
+  <div class="mono">
+export FLASK_APP=concat_lists.py
+  </div>
+  <h2>FLASK_ENV</h2>
+  <p>
+    The <strong>FLASK_ENV</strong> environment variable sets the Flask application to <strong>development</strong> mode.
+  </p>
+  <div class="mono">
+export FLASK_ENV=development
+  </div>
+  <p>
+    <strong>Debugger</strong> is activated:
+  </p>
+  <div class="mono">
+$ sudo bash concat_lists.sh
+ * Serving Flask app "concat_lists.py" (lazy loading)
+ * Environment: development
+ * Debug mode: on
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: XXX-XXX-XXX
+  </div>
+  <h2>
+    Port 5000
+  </h2>
+  <p>
+    Flask application defaults to port <strong>5000</strong>. <strong>curl</strong> can be used to test the application.
+  </p>
+  <div class="mono">
+$ curl http://localhost:5000
+  </div>
+  <h2>Shell Script Code</h2>
+  <div class="mono">
+#!/bin/bash
+# $ sudo ./concat_lists.sh
+
+export FLASK_APP=concat_lists.py
+export FLASK_ENV=development
+flask run
+  </div>
+</body>
+</html>
