@@ -1,0 +1,25 @@
+.mono {
+  padding: 10px;
+  margin: 10px;
+  background-color: #BBFFFF;
+  box-shadow: 5px 5px 5px #D8D8D8;
+  font-family: "DejaVu Sans Mono", monospace;
+  white-space: pre;
+  font-size: 1em;
+}
+strong {
+  background-color: #E8E8E8;
+  padding-right: 1em;
+  padding-left: 1em;
+}
+h2 {
+  color: #004000;
+}
+.mono2 {
+  font-family: "DejaVu Sans Mono", monospace;
+  color: #400000;
+}
+p {
+  font-size: 1em;
+  font-family: "DejaVu Sans", sans-serif;
+}
